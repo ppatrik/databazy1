@@ -9,12 +9,14 @@
 ## Úlohy
 * Vypíšte meno a priezvisko (do jedného sĺpca) a pohlavie Muz, Zena alebo neurčené
 ```SQL
-SELECT meno + ' ' + priezvisko AS 'Meno a Priezvisko', 
-CASE pohlavie 
-  WHEN 'm' THEN 'Muž' 
-  WHEN 'z' THEN 'Žena' 
-  ELSE 'nezname' 
-END AS pohlavie FROM student;
+SELECT 
+  meno + ' ' + priezvisko AS 'Meno a Priezvisko', 
+  CASE pohlavie 
+    WHEN 'm' THEN 'Muž' 
+    WHEN 'z' THEN 'Žena' 
+    ELSE 'nezname' 
+  END AS pohlavie 
+FROM student;
 ```
 * Vypíšte študentov, ktorí nemajú určený dátum narodenia
 ```SQL
@@ -76,7 +78,9 @@ SELECT DATEDIFF(dd, YEAR(GETDATE()) + '-01-01', GETDATE());
 ```
 * Vypíšte zajtrajší dátum
 ```SQL
+SELECT DATEADD(dd, 1, GETDATE()) AS ZajtrajsiDen;
 ```
 * Vypíšte názov zajtrajšieho dňa
 ```SQL
+SELECT DATENAME(dw, DATEADD(dd, 1, GETDATE())) AS ZajtrajsiDen;
 ```
