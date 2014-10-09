@@ -130,6 +130,8 @@ SELECT * FROM Osoba WHERE priezvisko LIKE '%ova%';
 * Vypíšte osoby, ktorých priezviská končia na slovo ová + ľubovoľný znak
 ```SQL
 SELECT * FROM Osoba WHERE SUBSTRING(priezvisko, 1, LEN(priezvisko)-1) LIKE '%ova';
+# alebo
+SELECT * FROM Osoba WHERE priezvisko LIKE '%ova_';
 ```
 * Vypíšte osoby, ktorých priezviská obsahujú znaky o a á
 ```SQL
@@ -142,4 +144,6 @@ SELECT * FROM Osoba WHERE LOWER(priezvisko) LIKE '%k%';
 * Vypíšte osoby, ktorých priezviská obsahujú práve 5 znakov
 ```SQL
 SELECT * FROM Osoba WHERE LEN(priezvisko) = 5;
+# alebo
+SELECT * FROM Osoba WHERE priezvisko LIKE '_____';
 ```
