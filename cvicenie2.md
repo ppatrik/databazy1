@@ -72,9 +72,8 @@ SELECT *, DATENAME(dw, datum_narodenia) as 'Narodeny v dni' FROM student WHERE D
 SELECT * , DATEDIFF(yy, datum_narodenia, GETDATE()) AS vek FROM student;
 ```
 * Koľkatý je dnešný deň roka?
-> OPRAVIŤ!
 ```SQL
-SELECT DATEDIFF(dd, YEAR(GETDATE()) + '-01-01', GETDATE());
+SELECT DATEDIFF(dd, DATEFROMPARTS(YEAR(GETDATE()), 1, 1), GETDATE());
 ```
 * Vypíšte zajtrajší dátum
 ```SQL
