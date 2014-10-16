@@ -9,35 +9,67 @@
 ## Úlohy
 * Usporiadajte lekárov podľa veku zostupne
 ```SQL
+SELECT * FROM Lekari ORDER BY datNar ASC;
 ```
 * Nájdite dátum narodenia najmladšieho/-ej lekára/-ky
 ```SQL
+SELECT TOP 1 datNar FROM Lekari ORDER BY datNar DESC;
 ```
 * Vypíšte aj jeho/jej krstné meno a špecializáciu
 ```SQL
+SELECT TOP 1 datNar, krstne, spec FROM Lekari ORDER BY datNar DESC;
 ```
 * Nájdite dátum narodenia druhého najmladšieho/-ej lekára/-ky
 ```SQL
+SELECT TOP 1 datNar, krstne, spec FROM Lekari
+WHERE idL NOT IN (SELECT TOP 1 idL FROM Lekari ORDER BY datNar DESC)
+ORDER BY datNar DESC;
 ```
 * Nájdite všetky údaje o treťom/-tej najmladšom/-ej lekárovi/-ke
 ```SQL
+SELECT TOP 1 * FROM Lekari
+WHERE idL NOT IN (SELECT TOP 2 idL FROM Lekari ORDER BY datNar DESC)
+ORDER BY datNar DESC;
 ```
 * Vráťte prvých troch najmladších
 ```SQL
+SELECT TOP 3 * FROM Lekari ORDER BY datNar DESC;
 ```
 * Usporiadajte lekárov podľa veku zostupne a vráťte aj číselnik ~ poradie
 ```SQL
+SELECT ROW_NUMBER()OVER(ORDER BY datNar ASC) AS poradie, * FROM Lekari;
 ```
 * Vráťte tretieho/-u najmladšieho/-u lekára/-ku
 ```SQL
+SELECT TOP 1 * FROM Lekari
+WHERE idL NOT IN (SELECT TOP 2 idL FROM Lekari ORDER BY datNar DESC)
+ORDER BY datNar DESC;
 ```
 
 ## Domáca úloha
 * Nájdite najmenší mesačný príjem medzi pacientami - Tri riešenia (MIN, ALL, TOP) + 4** ( RANK() OVER ...)
 ```SQL
+SELECT MIN(mesPrijem) AS mesPrijem FROM Pacienti;
+--alebo
+SELECT mesPrijem FROM Pacienti WHERE mesPrijem <= ALL (SELECT mesPrijem FROM Pacienti WHERE mesPrijem IS NOT NULL);
+--alebo
+SELECT TOP 1 mesPrijem FROM Pacienti WHERE mesPrijem IS NOT NULL ORDER BY mesPrijem ASC;
+--alebo
+SELECT tabulka.mesPrijem
+FROM (SELECT RANK()OVER(ORDER BY mesPrijem ASC) as poradie, mesPrijem FROM Pacienti WHERE mesPrijem IS NOT NULL) as tabulka
+WHERE tabulka.poradie = 1
 ```
 * Vypíšte aj krstné meno pacienta - Tri riešenia (MIN, ALL, TOP)
 ```SQL
+SELECT mesPrijem, krstne FROM Pacienti WHERE mesPrijem IN (SELECT MIN(mesPrijem) AS mesPrijem FROM Pacienti);
+--alebo
+SELECT mesPrijem, krstne FROM Pacienti WHERE mesPrijem <= ALL (SELECT mesPrijem FROM Pacienti WHERE mesPrijem IS NOT NULL);
+--alebo
+SELECT TOP 1 mesPrijem, krstne FROM Pacienti WHERE mesPrijem IS NOT NULL ORDER BY mesPrijem ASC;
+--alebo
+SELECT tabulka.mesPrijem, tabulka.krstne
+FROM (SELECT RANK()OVER(ORDER BY mesPrijem ASC) as poradie, mesPrijem, krstne FROM Pacienti WHERE mesPrijem IS NOT NULL) as tabulka
+WHERE tabulka.poradie = 1
 ```
 * Nájdite 2. najmenší mesačný príjem medzi pacientami
 ```SQL
