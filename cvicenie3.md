@@ -10,7 +10,9 @@
 ## Úlohy
 * Nájdite meno pacienta s najväčším prijímom (z tabuľky Pacienti)
 ```SQL
-SELECT TOP 1 * FROM Pacienti ORDER BY mesPrijem DESC;
+SELECT TOP 1 krstne FROM Pacienti ORDER BY mesPrijem DESC;
+#alebo
+SELECT krstne FROM Pacienti WHERE mesPrijem = (SELECT MAX(mesPrijem) FROM Pacienti);
 ```
 * Koľko pacientov navštívilo lekára s idL 3 (z tabuľky Navstevy)?
 ```SQL
