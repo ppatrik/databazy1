@@ -33,16 +33,33 @@ SELECT idP, COUNT(idP) FROM Navstevy WHERE idL IN (SELECT idL FROM Lekari WHERE 
 ```
 * Zistite ID pacientov, ktorí už kedysi navštívili zubného lekára. Okrem ID uveďte aj dátum návštevy
 ```SQL
+SELECT idP, den FROM Navstevy WHERE idL IN (SELECT idL FROM Lekari WHERE spec = 'Zubny');
 ```
 * Zistite iba počet všetkých návštev u zubného lekára
 ```SQL
+SELECT count(*) AS pocetNavstevLekara FROM Navstevy WHERE idL IN (SELECT idL FROM Lekari WHERE spec = 'Zubny');
 ```
 * Zistite mená pacientov, ktorí už navštívili zubného lekára. Vráťte aj meno lekára
 ```SQL
+SELECT p.krstne AS pacient, l.krstne AS lekar 
+FROM Navstevy n
+JOIN Pacienti p ON n.idP=p.idP
+JOIN Lekari l ON n.idL=l.idL 
+WHERE n.idL IN (SELECT idL FROM Lekari WHERE spec = 'Zubny');
 ```
 * Zistite mená pacientov, ktorí už navštívili lekára Ota alebo Imra. Uveďte aj mena lekárov a výsledok zoraďte podľa mien lekárov, pacientov
 ```SQL
+SELECT p.krstne AS pacient, l.krstne AS lekar 
+FROM Navstevy n
+JOIN Pacienti p ON n.idP=p.idP
+JOIN Lekari l ON n.idL=l.idL 
+WHERE n.idL IN (SELECT idL FROM Lekari WHERE krstne = 'Oto' OR krstne = 'Imro')
+ORDER BY l.krstne ASC, p.krstne ASC;
 ```
 * Vráťte mená pacientov, ktorí už navštívili lekára Ota a Imra
 ```SQL
+SELECT DISTINCT p.krstne AS pacient
+FROM Navstevy n
+JOIN Pacienti p ON n.idP=p.idP
+WHERE n.idL IN (SELECT idL FROM Lekari WHERE krstne = 'Oto' OR krstne = 'Imro');
 ```
