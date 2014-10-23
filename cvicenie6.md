@@ -11,7 +11,10 @@
 ## Úlohy
 * Nájdite krstné meno pacienta s 2. najmenším mesačným príjmom a vypíšte aj mesačný príjem s použitím ALL
 ```SQL
-
+SELECT TOP 1 * FROM Pacienti
+WHERE mesPrijem != ALL (SELECT TOP 1 mesPrijem FROM Pacienti WHERE mesPrijem IS NOT NULL ORDER BY mesPrijem)
+AND mesPrijem IS NOT NULL
+ORDER BY mesPrijem;
 ```
 * Usporiadajte poplatky 300 a 500 z tabuľky Navstevy vzostupne. Uveďte aj číslo riadkov (číselník) a vypočítajte spriemernené poradia
 ```SQL
