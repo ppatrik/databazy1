@@ -65,9 +65,9 @@ SELECT * FROM Navstevy WHERE den = (SELECT MIN(den) FROM Navstevy);
 * Zistite "minimum" pohlavia (OsobaVztah.Osoba)
 ```SQL
 USE OsobaVztah;
-SELECT top 1 pohlavie, COUNT(pohlavie) FROM Osoba GROUP BY pohlavie ORDER BY 2 ASC;
+SELECT MIN(pohlavie) FROM Osoba;
 ```
 * Zistite "maximum" mena (OsobaVztah.Osoba)
 ```SQL
-SELECT top 1 meno, COUNT(meno) FROM Osoba GROUP BY meno ORDER BY 2 DESC;
+SELECT MAX(meno) FROM Osoba;
 ```
