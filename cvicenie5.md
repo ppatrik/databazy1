@@ -73,16 +73,30 @@ WHERE tabulka.poradie = 1
 ```
 * Nájdite 2. najmenší mesačný príjem medzi pacientami
 ```SQL
+SELECT TOP 1 mesPrijem FROM Pacienti
+WHERE mesPrijem NOT IN (SELECT TOP 1 mesPrijem FROM Pacienti WHERE mesPrijem IS NOT NULL ORDER BY mesPrijem)
+AND mesPrijem IS NOT NULL
+ORDER BY mesPrijem;
 ```
 * Vypíšte aj krstné meno pacienta (alebo s použitím iba ALL)
 ```SQL
+SELECT TOP 1 * FROM Pacienti
+WHERE mesPrijem != ALL (SELECT TOP 1 mesPrijem FROM Pacienti WHERE mesPrijem IS NOT NULL ORDER BY mesPrijem)
+AND mesPrijem IS NOT NULL
+ORDER BY mesPrijem;
 ```
 * Vypíšte krstné meno pacienta s 3. minimálnym prijímom - Dve riešenia MIN, RANK() OVER ... 4**
 ```SQL
+SELECT TOP 1 krstne FROM Pacienti
+WHERE mesPrijem != ALL (SELECT TOP 2 mesPrijem FROM Pacienti WHERE mesPrijem IS NOT NULL ORDER BY mesPrijem)
+AND mesPrijem IS NOT NULL
+ORDER BY mesPrijem;
 ```
 * Usporiadajte pacientov podľa mesacného prijímu a vypíšte aj poradia - Dve riešenia
 ```SQL
+SELECT ROW_NUMBER()OVER(ORDER BY mesPrijem), * FROM Pacienti;
 ```
 * Zbavte sa NULL hodnôt
 ```SQL
+SELECT ROW_NUMBER()OVER(ORDER BY mesPrijem), * FROM Pacienti WHERE mesPrijem IS NOT NULL;
 ```
