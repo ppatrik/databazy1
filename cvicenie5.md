@@ -80,7 +80,7 @@ ORDER BY mesPrijem;
 ```
 * Vypíšte aj krstné meno pacienta (alebo s použitím iba ALL)
 ```SQL
-SELECT TOP 1 * FROM Pacienti
+SELECT TOP 1 krstne, mesPrijem FROM Pacienti
 WHERE mesPrijem != ALL (SELECT TOP 1 mesPrijem FROM Pacienti WHERE mesPrijem IS NOT NULL ORDER BY mesPrijem)
 AND mesPrijem IS NOT NULL
 ORDER BY mesPrijem;
