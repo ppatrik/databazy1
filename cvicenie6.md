@@ -22,7 +22,9 @@ ORDER BY mesPrijem;
 ```
 * Sumárny poplatok v jednotlivých mesiacoch
 ```SQL
-
+SELECT s.mesiac, SUM(s.poplatok) 
+FROM (SELECT MONTH(den) as mesiac, poplatok FROM Navstevy) as s
+GROUP BY s.mesiac;
 ```
 * Počet poplatkov/pacientov v jednotlivých mesiacoch
 ```SQL
