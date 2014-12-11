@@ -48,7 +48,6 @@ ALTER TABLE osoba ALTER COLUMN priezvisko VARCHAR(20) NOT NULL;
 ```
 * V ďalšom už nekontrolujte existujúce riadky
 ```sql
-
 ```
 * Vložiť riadok
 ```sql
@@ -80,7 +79,18 @@ ALTER TABLE osoba ADD DEFAULT( 'm' ) FOR pohlavie;
 ```
 * Vytvorte tabuľku osoba tak ako predtým, ale s inými obmedzeniami ( meno a priezvisko nie sú null, pohlavie musí byť 'm' alebo 'z', stĺpce výška, váha, pohlavie sú jedinečné, výška a váha sú kladné, tabuľka nemá iné telefónne číslo ako +421xxxxxxxxx )
 ```sql
---
+create table osoba (
+   meno                 text                 not null,
+   priezvisko           time                 not null,
+   pohlavie             char(10)             null
+      constraint CKC_POHLAVIE_OSOBA check (pohlavie is null or (pohlavie in ('m','z'))),
+   vyska                char(10)             null
+      constraint CKC_VYSKA_OSOBA check (vyska is null or (vyska >= '0')),
+   vaha                 char(10)             null
+      constraint CKC_VAHA_OSOBA check (vaha is null or (vaha >= '0')),
+   telefon              char(10)             null
+      constraint CKC_TELEFON_OSOBA check (telefon LIKE '+421_________')
+)
 ```
 * Vypnúť constraint
 ```sql

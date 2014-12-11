@@ -7,6 +7,8 @@
 * Naplnte tabuľky
 * Pridajte cudzie kľúče
 * Pokúste sa zmazať záznam z projektu. Upravte cudzí kľúč tak, aby mazal kaskádovito
+```sql
+```
 * Vymažte ceny nad 1000 z tabuľky výdaje
 
 # Úlohy
